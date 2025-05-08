@@ -19,6 +19,7 @@ interface Project {
   pdfUrl?: string
   codePreview?: string
   technologies: string[]
+  imageUrl?: string // Add imageUrl as an optional property
 }
 
 interface ProjectUploadFormProps {
@@ -36,6 +37,9 @@ export function ProjectUploadForm({ onSubmit, project, isEditing = false }: Proj
   const [technology, setTechnology] = useState("")
   const [technologies, setTechnologies] = useState<string[]>([])
   const [existingPdfUrl, setExistingPdfUrl] = useState<string | undefined>("")
+  
+  // Set the image URL directly in the code (no need for user input)
+  const defaultImageUrl = "/images/agriflow.jpg"  // This is where your image is located in the public folder
 
   // Initialize form with existing project data if editing
   useEffect(() => {
@@ -75,6 +79,7 @@ export function ProjectUploadForm({ onSubmit, project, isEditing = false }: Proj
       pdfUrl,
       codePreview: codePreview || undefined,
       technologies,
+      imageUrl: defaultImageUrl,  // Directly include the image URL
     }
 
     onSubmit(newProject)
@@ -192,6 +197,13 @@ export function ProjectUploadForm({ onSubmit, project, isEditing = false }: Proj
               </div>
             )}
           </div>
+
+          {/* Display Image */}
+          {defaultImageUrl && (
+            <div className="mt-4">
+              <img src={defaultImageUrl} alt="Project Image" className="w-full h-auto" />
+            </div>
+          )}
 
           <div className="flex justify-end space-x-2">
             <Button type="submit" className="bg-portfolio-magenta hover:bg-portfolio-darkPurple">
